@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Expense - AWS Cloud Expense Tracker{% endblock %}
+
+{% block content %}
+<div class="edit-container">
+    <div class="card-edit">
+        <div class="card-edit-header">
+            <h2><i class="fa-solid fa-pen-to-square text-primary"></i> Edit Expense Record #{{ expense.id }}</h2>
+            <p class="text-muted">Update details for this expenditure ledger entry.</p>
+        </div>
+
+        <form action="{{ url_for('edit_expense', expense_id=expense.id) }}" method="POST">
+            <div class="form-group">
+                <label class="form-label">Expense Title <span class="text-danger">*</span></label>
+                <input type="text" name="title" class="form-control" required value="{{ expense.title }}" maxlength="100">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-half">
+                    <label class="form-label">Amount ($ USD) <span class="text-danger">*</span></label>
+                    <input type="number" step="0.01" min="0.01" max="1000000" name="amount" class="form-control" required value="{{ '%.2f'|format(expense.amount) }}">
+                </div>
+                <div class="form-group col-half">
+                    <label class="form-label">Date <span class="text-danger">*</span></label>
+                    <input type="date" name="date" class="form-control" required value="{{ expense.date }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Category <span class="text-danger">*</span></label>
+                <select name="category" class="form-select" required>
+                    {% for cat in categories %}
+                        <option value="{{ cat }}" {% if expense.category == cat %}selected{% endif %}>{{ cat }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Description / Tags</label>
+                <textarea name="description" class="form-control" rows="3" maxlength="500">{{ expense.description or '' }}</textarea>
+            </div>
+
+            <div class="form-actions">
+                <a href="{{ url_for('index') }}" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Cancel</a>
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Update Expense</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

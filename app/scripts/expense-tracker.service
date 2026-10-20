@@ -1,0 +1,33 @@
+[Unit]
+Description=AWS Portfolio Expense Tracker Daemon (Gunicorn)
+After=network.target
+
+[Service]
+Type=notify
+User=appuser
+Group=appuser
+WorkingDirectory=/opt/aws-secure-web-architecture/app
+Environment="PATH=/opt/venv/bin:/usr/local/bin:/usr/bin"
+Environment="PYTHONPATH=/opt/aws-secure-web-architecture"
+Environment="DATABASE_PATH=/var/data/expenses.db"
+Environment="APP_ENV=production"
+ExecStart=/opt/venv/bin/gunicorn \
+    --workers 2 \
+    --threads 2 \
+    --bind 127.0.0.1:8000 \
+    --access-logfile /var/log/expense-tracker/access.log \
+    --error-logfile /var/log/expense-tracker/error.log \
+    --capture-output \
+    "app.src.app:app"
+
+# Security Sandboxing
+ProtectSystem=full
+ProtectHome=true
+NoNewPrivileges=true
+PrivateTmp=true
+
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

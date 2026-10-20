@@ -1,0 +1,19 @@
+# Example Terraform Variable Overrides
+# Copy this file to terraform.tfvars and fill in your values
+
+aws_region   = "us-east-1"
+environment  = "dev"
+owner_tag    = "your-name-portfolio"
+
+# Restrict SSH port 22 access strictly to your public IP (CIDR format)
+# Find your IP via https://checkip.amazonaws.com or curl ifconfig.me
+admin_ip_cidr = "203.0.113.45/32"
+
+# Optional: EC2 key pair name if you want SSH access
+# ssh_key_name = "my-aws-keypair"
+
+# Instance sizing (Free Tier eligible: t2.micro or t3.micro)
+instance_type = "t3.micro"
+
+# Enable AWS Systems Manager Session Manager (Recommended: zero open ports)
+enable_ssm = true

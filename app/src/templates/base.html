@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AWS Cloud Expense Tracker{% endblock %}</title>
+    <!-- Modern Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons for cloud & financial badges -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                <i class="fa-brands fa-aws brand-icon"></i>
+                <div class="brand-text">
+                    <span class="brand-title">CloudSpend Tracker</span>
+                    <span class="brand-subtitle">AWS Solutions Architecture Portfolio</span>
+                </div>
+            </div>
+            <div class="nav-status">
+                <span class="badge badge-vpc"><i class="fa-solid fa-network-wired"></i> VPC 10.0.0.0/16</span>
+                <span class="badge badge-tier"><i class="fa-solid fa-server"></i> Single-Instance Prototype</span>
+                <a href="/healthz" target="_blank" class="badge badge-health" id="health-badge" title="Click to view JSON healthcheck">
+                    <span class="pulse-dot"></span> Health: OK
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-container">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            <i class="fa-solid {% if category == 'success' %}fa-circle-check{% elif category == 'danger' %}fa-triangle-exclamation{% else %}fa-circle-info{% endif %}"></i>
+                            <span>{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% if error_title %}
+            <div class="error-card">
+                <h2><i class="fa-solid fa-shield-halved"></i> {{ error_title }}</h2>
+                <p>{{ error_message }}</p>
+                <a href="{{ url_for('index') }}" class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i> Return to Dashboard</a>
+            </div>
+        {% else %}
+            {% block content %}{% endblock %}
+        {% endif %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>
+                Built for AWS Solutions Architect Portfolio &bull;
+                Infrastructure provisioned via <strong>Terraform</strong> &bull;
+                Running on Amazon EC2 (Linux) with SQLite storage.
+            </p>
+            <p class="footer-note">
+                <i class="fa-solid fa-lock"></i> Architecture conforms to AWS Well-Architected Framework: Security, Cost Optimization, and Operational Excellence.
+            </p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
