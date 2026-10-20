@@ -163,7 +163,7 @@ The deployed application features a dashboard for recording and monitoring cloud
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/aws-secure-web-architecture.git
+git clone https://github.com/Bhuwan077/aws-secure-web-architecture.git
 cd aws-secure-web-architecture
 ```
 

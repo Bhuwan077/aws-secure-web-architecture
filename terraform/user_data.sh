@@ -27,7 +27,7 @@ mkdir -p "${APP_DIR}" "${DATA_DIR}" "${LOG_DIR}"
 echo "==> Fetching application code..."
 if [ ! -d "${APP_DIR}/app" ]; then
     # Clone from public repo if available, or initialize baseline
-    git clone https://github.com/your-username/aws-secure-web-architecture.git "${APP_DIR}" || true
+    git clone https://github.com/Bhuwan077/aws-secure-web-architecture.git "${APP_DIR}" || true
 fi
 
 # Fallback bootstrap if repository not yet cloned

@@ -23,10 +23,10 @@ resource "aws_security_group" "alb" {
   }
 
   egress {
-    description = "Forward to App Tier"
-    from_port   = 8000
-    to_port     = 8000
-    protocol    = "tcp"
+    description     = "Forward to App Tier"
+    from_port       = 8000
+    to_port         = 8000
+    protocol        = "tcp"
     security_groups = [] # Chained in app SG
   }
 
